@@ -1,6 +1,5 @@
-package com.example.bookingservice.entities;
+package com.example.bookingservice.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,17 +7,13 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Booking {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+public class BookingDto {
     private int bookingId;
     private String bookingTime;
     private Date bookingDate;
-    private int futsalid;
-    private String userEmail;
+    private int FutsalId;
 }

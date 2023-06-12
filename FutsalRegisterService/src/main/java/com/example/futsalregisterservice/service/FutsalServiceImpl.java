@@ -4,6 +4,7 @@ import com.example.futsalregisterservice.dto.FutsalRequestDto;
 import com.example.futsalregisterservice.dto.FutsalResponseDto;
 import com.example.futsalregisterservice.entities.Contact;
 import com.example.futsalregisterservice.entities.Futsal;
+import com.example.futsalregisterservice.enums.FutsalEnum;
 import com.example.futsalregisterservice.exception.ResourceNotFoundException;
 import com.example.futsalregisterservice.repositories.FutsalRepo;
 import org.springframework.stereotype.Service;
@@ -54,7 +55,16 @@ public class FutsalServiceImpl implements FutsalService{
         futsalResponseDto.setFutsalName(futsal.getFutsalName());
         futsalResponseDto.setDescription(futsal.getDescription());
         futsalResponseDto.setFutsalId(futsal.getFutsalId());
+        futsalResponseDto.setFutsalEnum(futsal.getFutsalEnum());
 
         return futsalResponseDto;
+    }
+
+    @Override
+    public String updateStatus(int id) {
+        Futsal futsal = futsalRepo.findById(id).orElseThrow(()->new ResourceNotFoundException());
+        futsal.setFutsalEnum(FutsalEnum.BOOKED);
+        futsalRepo.save(futsal);
+        return "Booked";
     }
 }

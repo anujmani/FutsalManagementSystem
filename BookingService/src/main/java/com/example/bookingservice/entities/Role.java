@@ -1,5 +1,4 @@
-package com.example.userservice.entities;
-
+package com.example.bookingservice.entities;
 public enum Role {
     ADMIN,
     USER,

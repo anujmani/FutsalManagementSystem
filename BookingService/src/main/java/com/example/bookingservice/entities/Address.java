@@ -1,24 +1,24 @@
 package com.example.bookingservice.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Booking {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int bookingId;
-    private String bookingTime;
-    private Date bookingDate;
-    private int futsalid;
-    private String userEmail;
+    private int addressId;
+    private String province;
+    private String city;
+    private String street;
 }

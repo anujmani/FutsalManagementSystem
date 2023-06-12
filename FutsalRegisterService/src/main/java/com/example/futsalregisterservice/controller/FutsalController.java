@@ -30,6 +30,10 @@ public class FutsalController {
     private ResponseEntity<FutsalResponseDto>getFutsal(@PathVariable("id") int id){
         return ResponseEntity.ok(futsalService.getFutsal(id));
     }
+    @PostMapping("/updateStatus/{id}")
+    private String updateFutsal(@PathVariable("id") int id){
+        return futsalService.updateStatus(id);
+    }
 
 
 }

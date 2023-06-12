@@ -1,4 +1,4 @@
-package com.example.userservice.config;
+package com.example.userservice.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

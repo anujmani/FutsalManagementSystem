@@ -6,6 +6,7 @@
     <file type="web" url="file://$PROJECT_DIR$/BookingService" />
     <file type="web" url="file://$PROJECT_DIR$/discoveryService" />
     <file type="web" url="file://$PROJECT_DIR$/FutsalRegisterService" />
+    <file type="web" url="file://$PROJECT_DIR$/PaymentService" />
     <file type="web" url="file://$PROJECT_DIR$/UserService" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_18" default="true" project-jdk-name="18" project-jdk-type="JavaSDK">

@@ -11,4 +11,6 @@ public interface FutsalService {
     List<FutsalResponseDto> getAllFutsal();
 
     FutsalResponseDto getFutsal(int id);
+
+    String updateStatus(int id);
 }

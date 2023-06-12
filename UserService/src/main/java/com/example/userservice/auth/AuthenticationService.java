@@ -1,6 +1,6 @@
 package com.example.userservice.auth;
 
-import com.example.userservice.config.JwtService;
+import com.example.userservice.service.JwtService;
 import com.example.userservice.entities.Role;
 import com.example.userservice.entities.User;
 import com.example.userservice.repository.UserRepo;

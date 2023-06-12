@@ -1,12 +1,13 @@
 package com.example.bookingservice.controller;
 
+import com.example.bookingservice.dto.BookingDto;
 import com.example.bookingservice.entities.Booking;
 import com.example.bookingservice.service.BookingService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.tomcat.util.http.parser.Authorization;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/book")
 public class BookingController {
     private final BookingService bookingService;
 
@@ -14,9 +15,10 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @PostMapping("/bookCourt")
-    private void bookId(@RequestBody Booking booking){
-        bookingService.bookCourt(booking);
 
+    @PostMapping("/bookCourt")
+    private void bookId(@RequestBody BookingDto booking, @RequestHeader("Authorization")String authorizationHeader){
+        bookingService.bookCourt(booking,authorizationHeader);
     }
+
 }

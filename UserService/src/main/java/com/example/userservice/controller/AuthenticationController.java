@@ -1,5 +1,9 @@
-package com.example.userservice.auth;
+package com.example.userservice.controller;
 
+import com.example.userservice.auth.AuthenticationRequest;
+import com.example.userservice.auth.AuthenticationResponse;
+import com.example.userservice.auth.AuthenticationService;
+import com.example.userservice.auth.RegisterRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
