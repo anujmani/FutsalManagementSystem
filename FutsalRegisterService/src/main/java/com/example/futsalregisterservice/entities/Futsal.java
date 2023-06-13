@@ -26,5 +26,6 @@ public class Futsal {
     @OneToOne()
     @Cascade(CascadeType.ALL)
     private Address address;
+    private String ownerEmail;
 
 }

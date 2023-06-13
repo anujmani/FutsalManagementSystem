@@ -31,6 +31,15 @@ public class SecurityUtils {
                 .parseClaimsJws(token)
                 .getBody();
     }
+    public String extractRole(String token){
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getIssuer();
+    }
     private Key getSignInKey(){
         byte[] keyBytes = Decoders.BASE64.decode(Secret_key);
         return Keys.hmacShaKeyFor(keyBytes);

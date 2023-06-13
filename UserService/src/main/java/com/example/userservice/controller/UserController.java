@@ -12,7 +12,6 @@ public class UserController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/registerAdmin")
-    @PreAuthorize("hasAuthority('SUPERADMIN')")
     public void registerAdmin(@RequestBody RegisterRequest registerRequest){
         authenticationService.registerAdmin(registerRequest);
     }

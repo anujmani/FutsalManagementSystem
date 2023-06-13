@@ -5,6 +5,6 @@ import com.example.bookingservice.entities.Booking;
 import org.apache.tomcat.util.http.parser.Authorization;
 
 public interface BookingService {
-    void bookCourt(BookingDto booking, String token);
+    String bookCourt(BookingDto booking, String token);
     BookingDto getBookingById(int id);
 }

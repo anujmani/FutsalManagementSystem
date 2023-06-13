@@ -23,6 +23,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/auth/**")
                 .permitAll()
+                .requestMatchers("/registerAdmin")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

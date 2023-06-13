@@ -10,11 +10,19 @@ public class RouteValidator {
     public static final List<String> openApiEndpoints= List.of(
             "api/auth/register",
             "api/auth/authenticate",
-            "/eureka"
+            "/eureka",
+            "/futsal/specified"
     );
     public Predicate<ServerHttpRequest> isSecured=
             request ->openApiEndpoints
                     .stream()
                     .noneMatch(uri ->request.getURI().getPath().contains(uri));
+    public static final List<String> OwnerEndpoints= List.of(
+            "/futsal/registerFutsal"
+    );
+    public Predicate<ServerHttpRequest> OwnerAccess =
+            request ->OwnerEndpoints
+                    .stream()
+                    .anyMatch(uri ->request.getURI().getPath().contains(uri));
 
 }

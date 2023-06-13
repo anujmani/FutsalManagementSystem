@@ -2,34 +2,46 @@ package com.example.futsalregisterservice.service;
 
 import com.example.futsalregisterservice.dto.FutsalRequestDto;
 import com.example.futsalregisterservice.dto.FutsalResponseDto;
-import com.example.futsalregisterservice.entities.Contact;
 import com.example.futsalregisterservice.entities.Futsal;
 import com.example.futsalregisterservice.enums.FutsalEnum;
 import com.example.futsalregisterservice.exception.ResourceNotFoundException;
 import com.example.futsalregisterservice.repositories.FutsalRepo;
+import com.example.futsalregisterservice.utils.JwtUtils;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class FutsalServiceImpl implements FutsalService{
 
     private final FutsalRepo futsalRepo;
+    private final JwtUtils jwtUtils;
 
-    public FutsalServiceImpl(FutsalRepo futsalRepo) {
+    public FutsalServiceImpl(FutsalRepo futsalRepo, JwtUtils jwtUtils) {
         this.futsalRepo = futsalRepo;
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
-    public void addFutsal(FutsalRequestDto futsalRequestDto) {
+    public void addFutsal(FutsalRequestDto futsalRequestDto,String authHeader) {
         Futsal futsal = new Futsal();
         futsal.setFutsalName(futsalRequestDto.getFutsalName());
         futsal.setContact(futsalRequestDto.getContact());
         futsal.setAddress(futsalRequestDto.getAddress());
         futsal.setDescription(futsalRequestDto.getDescription());
         futsal.setFutsalEnum(futsalRequestDto.getFutsalEnum());
-
+        String token = authHeader.replace("Bearer ", "");
+        String role =jwtUtils.extractUser(token);
+        futsal.setOwnerEmail(role);
         futsalRepo.save(futsal);
 
     }
@@ -66,5 +78,25 @@ public class FutsalServiceImpl implements FutsalService{
         futsal.setFutsalEnum(FutsalEnum.BOOKED);
         futsalRepo.save(futsal);
         return "Booked";
+    }
+
+    @Override
+    public List<Futsal> getSearchFutsal(String futsalName, String contact, String address, Pageable pageable) {
+        List<Futsal> futsalList= futsalRepo.findAll(new Specification<Futsal>() {
+            @Override
+            public Predicate toPredicate(Root<Futsal> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+                Predicate predicate= criteriaBuilder.conjunction();
+                if(Objects.nonNull(futsalName) && Objects.nonNull(address)){
+                    predicate = criteriaBuilder.and(predicate,criteriaBuilder.between(root.get("futsalName"),futsalName,address));
+                }
+                if(!StringUtils.isEmpty(futsalName)){
+                    predicate=criteriaBuilder.and(predicate, criteriaBuilder.like(root.get("futsalName"),"%"+ futsalName+"%" ));
+
+                }
+                query.orderBy(criteriaBuilder.desc(root.get("futsalName")), criteriaBuilder.asc(root.get("futsalId")));
+                return predicate;
+            }
+        },pageable).getContent();
+        return futsalList;
     }
 }

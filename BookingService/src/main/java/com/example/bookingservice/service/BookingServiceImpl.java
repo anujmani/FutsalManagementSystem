@@ -26,7 +26,7 @@ public class BookingServiceImpl implements BookingService{
 
 
     @Override
-    public void bookCourt(BookingDto booking, String authhead) {
+    public String bookCourt(BookingDto booking, String authhead) {
         Booking orginalBook= new Booking();
         orginalBook.setBookingId(booking.getBookingId());
         orginalBook.setBookingDate(booking.getBookingDate());
@@ -38,6 +38,7 @@ public class BookingServiceImpl implements BookingService{
         if(futsal.getFutsalEnum() == FutsalEnum.AVAILABLE) {
             futsalClient.updateFutsal(booking.getFutsalId());
             bookingRepo.save(orginalBook);
+            return "booked";
         }
         else{
             throw new RuntimeException("Already booked");
