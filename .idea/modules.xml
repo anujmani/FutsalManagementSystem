@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ApiGateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ApiGateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BookingService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/BookingService.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/EmailService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/EmailService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/FutsalBookingSystem.iml" filepath="$PROJECT_DIR$/FutsalBookingSystem.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/FutsalRegisterService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/FutsalRegisterService.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/PaymentService.main.iml" filepath="$PROJECT_DIR$/.idea/modules/PaymentService.main.iml" />

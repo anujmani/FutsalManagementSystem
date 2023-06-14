@@ -1,21 +1,21 @@
 package com.example.bookingservice.service;
 
 import com.example.bookingservice.dto.BookingDto;
+import com.example.bookingservice.dto.PaymentRequestDto;
+import com.example.bookingservice.dto.PaymentResponseDto;
 import com.example.bookingservice.entities.Booking;
 import com.example.bookingservice.entities.Futsal;
 import com.example.bookingservice.entities.FutsalEnum;
 import com.example.bookingservice.feignClient.FutsalClient;
+import com.example.bookingservice.feignClient.PaymentClient;
 import com.example.bookingservice.repository.BookingRepo;
 import com.example.bookingservice.utils.JwtUtils;
-import jakarta.inject.Inject;
-import org.apache.tomcat.util.http.parser.Authorization;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.awt.print.Book;
 
 @Service
+@Slf4j
 public class BookingServiceImpl implements BookingService{
     @Autowired
     private BookingRepo bookingRepo;
@@ -23,6 +23,8 @@ public class BookingServiceImpl implements BookingService{
     private FutsalClient futsalClient;
     @Autowired
     private JwtUtils jwtUtils;
+    @Autowired
+    private PaymentClient paymentClient;
 
 
     @Override
@@ -32,14 +34,26 @@ public class BookingServiceImpl implements BookingService{
         orginalBook.setBookingDate(booking.getBookingDate());
         orginalBook.setBookingTime(booking.getBookingTime());
         orginalBook.setFutsalid(booking.getFutsalId());
+
         Futsal futsal = futsalClient.getFutsalById(booking.getFutsalId());
         String token = authhead.replace("Bearer ", "");
         orginalBook.setUserEmail(jwtUtils.extractUser(token));
+
         if(futsal.getFutsalEnum() == FutsalEnum.AVAILABLE) {
+
+
+            PaymentRequestDto paymentRequestDto= new PaymentRequestDto();
+            paymentRequestDto.setAmount(10000);
+            PaymentResponseDto paymentResponseDto=paymentClient.payment(paymentRequestDto);
+
+            log.info("Payment done of "+paymentResponseDto.getAmount());
+
             futsalClient.updateFutsal(booking.getFutsalId());
             bookingRepo.save(orginalBook);
+
             return "booked";
         }
+
         else{
             throw new RuntimeException("Already booked");
         }
