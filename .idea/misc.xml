@@ -5,6 +5,7 @@
     <file type="web" url="file://$PROJECT_DIR$/ApiGateway" />
     <file type="web" url="file://$PROJECT_DIR$/BookingService" />
     <file type="web" url="file://$PROJECT_DIR$/discoveryService" />
+    <file type="web" url="file://$PROJECT_DIR$/EmailService" />
     <file type="web" url="file://$PROJECT_DIR$/FutsalRegisterService" />
     <file type="web" url="file://$PROJECT_DIR$/PaymentService" />
     <file type="web" url="file://$PROJECT_DIR$/UserService" />

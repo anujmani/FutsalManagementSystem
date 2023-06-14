@@ -1,7 +1,9 @@
 package com.example.futsalregisterservice.controller;
 
+import com.example.futsalregisterservice.dto.ContactDto;
 import com.example.futsalregisterservice.dto.FutsalRequestDto;
 import com.example.futsalregisterservice.dto.FutsalResponseDto;
+import com.example.futsalregisterservice.entities.Contact;
 import com.example.futsalregisterservice.entities.Futsal;
 import com.example.futsalregisterservice.service.FutsalService;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +22,12 @@ public class FutsalController {
     public FutsalController(FutsalService futsalService) {
         this.futsalService = futsalService;
     }
+//    @Value(("${project.image}"))
+//    private String path;
 
     @PostMapping("/registerFutsal")
-    private void register(@RequestBody FutsalRequestDto futsalRequestDto,@RequestHeader("Authorization") String authorizationHeader){
+    private void register(@RequestBody FutsalRequestDto futsalRequestDto, @RequestHeader("Authorization") String authorizationHeader) {
+
         futsalService.addFutsal(futsalRequestDto,authorizationHeader);
     }
     @GetMapping("/getAllRegisteredFutsal")
@@ -32,6 +37,12 @@ public class FutsalController {
     @GetMapping("/getFutsal/{id}")
     private ResponseEntity<FutsalResponseDto>getFutsal(@PathVariable("id") int id){
         return ResponseEntity.ok(futsalService.getFutsal(id));
+    }
+    @PutMapping("/update")
+    private String updateFutsalContacts(@RequestBody ContactDto contactDto){
+
+        futsalService.updateFutsal(contactDto);
+        return "Updated";
     }
     @PostMapping("/updateStatus/{id}")
     private String updateFutsal(@PathVariable("id") int id){

@@ -56,7 +56,6 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                     if (!role.contains("ADMIN")) {
                         throw new RuntimeException("Role not matched");
                     }
-
                 }
             }
 

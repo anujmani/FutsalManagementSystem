@@ -27,5 +27,6 @@ public class Futsal {
     @Cascade(CascadeType.ALL)
     private Address address;
     private String ownerEmail;
+    private String image;
 
 }

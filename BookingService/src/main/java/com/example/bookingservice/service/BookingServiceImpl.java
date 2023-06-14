@@ -44,6 +44,7 @@ public class BookingServiceImpl implements BookingService{
             throw new RuntimeException("Already booked");
         }
     }
+
     public BookingDto getBookingById(int id){
         Booking book= bookingRepo.findById(id).orElseThrow(()->new RuntimeException("No booking"));
         BookingDto bookingDto= new BookingDto();

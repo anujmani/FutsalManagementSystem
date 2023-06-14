@@ -1,10 +1,13 @@
 package com.example.futsalregisterservice.service;
 
+import com.example.futsalregisterservice.dto.ContactDto;
 import com.example.futsalregisterservice.dto.FutsalRequestDto;
 import com.example.futsalregisterservice.dto.FutsalResponseDto;
+import com.example.futsalregisterservice.entities.Contact;
 import com.example.futsalregisterservice.entities.Futsal;
 import com.example.futsalregisterservice.enums.FutsalEnum;
 import com.example.futsalregisterservice.exception.ResourceNotFoundException;
+import com.example.futsalregisterservice.repositories.ContactRepo;
 import com.example.futsalregisterservice.repositories.FutsalRepo;
 import com.example.futsalregisterservice.utils.JwtUtils;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -24,15 +27,17 @@ import java.util.Objects;
 public class FutsalServiceImpl implements FutsalService{
 
     private final FutsalRepo futsalRepo;
+    private final ContactRepo contactRepo;
     private final JwtUtils jwtUtils;
 
-    public FutsalServiceImpl(FutsalRepo futsalRepo, JwtUtils jwtUtils) {
+    public FutsalServiceImpl(FutsalRepo futsalRepo, ContactRepo contactRepo, JwtUtils jwtUtils) {
         this.futsalRepo = futsalRepo;
+        this.contactRepo = contactRepo;
         this.jwtUtils = jwtUtils;
     }
 
     @Override
-    public void addFutsal(FutsalRequestDto futsalRequestDto,String authHeader) {
+    public void addFutsal(FutsalRequestDto futsalRequestDto, String authHeader)  {
         Futsal futsal = new Futsal();
         futsal.setFutsalName(futsalRequestDto.getFutsalName());
         futsal.setContact(futsalRequestDto.getContact());
@@ -40,6 +45,17 @@ public class FutsalServiceImpl implements FutsalService{
         futsal.setDescription(futsalRequestDto.getDescription());
         futsal.setFutsalEnum(futsalRequestDto.getFutsalEnum());
         String token = authHeader.replace("Bearer ", "");
+//        String relativePath = path + "images\\" + futsalRequestDto.getFutsalName().replaceAll("\\s", "");
+//        // returns the current working directory of user
+//        String absolutePath = System.getProperty("user.dir") + File.separator + relativePath;
+//
+//        File filePath = new File(absolutePath);
+//        if (!filePath.exists()) {
+//            filePath.mkdirs();
+//        }
+//        Files.copy(multipartFiles.getInputStream(), Paths.get(absolutePath,multipartFiles.getName()));
+//        futsal.setImage(relativePath+File.separator+multipartFiles.getOriginalFilename());
+
         String role =jwtUtils.extractUser(token);
         futsal.setOwnerEmail(role);
         futsalRepo.save(futsal);
@@ -98,5 +114,27 @@ public class FutsalServiceImpl implements FutsalService{
             }
         },pageable).getContent();
         return futsalList;
+    }
+
+    @Override
+    public void updateFutsal(ContactDto contactDto) {
+        List<Contact> contacts= futsalRepo.findById(contactDto.getFutsalId()).get().getContact();
+        List <Contact> newContacts= contactDto.getContacts();
+        for(int i =0; i<contacts.size();i++){
+            System.out.println(i);
+
+            for(int j=0;j< newContacts.size();j++){
+                if(i==j){
+                    contacts.get(i).setPhoneno(newContacts.get(i).getPhoneno());
+                }
+
+            }
+        }
+        Futsal futsal=futsalRepo.findById(contactDto.getFutsalId()).orElseThrow(null);
+        futsal.setContact(contacts);
+        futsalRepo.save(futsal);
+
+
+
     }
 }
