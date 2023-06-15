@@ -1,5 +1,6 @@
 package com.example.userservice.auth;
 
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

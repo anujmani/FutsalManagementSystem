@@ -6,5 +6,6 @@ import org.apache.tomcat.util.http.parser.Authorization;
 
 public interface BookingService {
     String bookCourt(BookingDto booking, String token);
+
     BookingDto getBookingById(int id);
 }

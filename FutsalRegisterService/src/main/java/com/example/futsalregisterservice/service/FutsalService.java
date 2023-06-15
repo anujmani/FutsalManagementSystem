@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface FutsalService {
-    void addFutsal(FutsalRequestDto futsalRequestDto, String authHeader) ;
+    void addFutsal(FutsalRequestDto futsalRequestDto, String authHeader);
 
     List<FutsalResponseDto> getAllFutsal();
 
@@ -21,9 +21,10 @@ public interface FutsalService {
     String updateStatus(int id);
 
 
-
     List<Futsal> getSearchFutsal(String futsalName, String contact, String address,
                                  org.springframework.data.domain.Pageable pageable);
 
     void updateFutsal(ContactDto contactDto);
+
+    FutsalResponseDto updateFutsalAll(FutsalRequestDto futsalRequestDto);
 }

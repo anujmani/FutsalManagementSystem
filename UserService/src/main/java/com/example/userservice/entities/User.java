@@ -1,6 +1,8 @@
 package com.example.userservice.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.GrantedAuthoritiesContainer;
@@ -20,6 +22,8 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+    @NotNull
+    @NotBlank
     private String userName;
     private String userAddress;
     private String userPhone;

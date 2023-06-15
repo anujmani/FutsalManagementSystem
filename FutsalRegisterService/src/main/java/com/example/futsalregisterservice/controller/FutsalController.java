@@ -6,6 +6,7 @@ import com.example.futsalregisterservice.dto.FutsalResponseDto;
 import com.example.futsalregisterservice.entities.Contact;
 import com.example.futsalregisterservice.entities.Futsal;
 import com.example.futsalregisterservice.service.FutsalService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,34 +27,40 @@ public class FutsalController {
 //    private String path;
 
     @PostMapping("/registerFutsal")
-    private void register(@RequestBody FutsalRequestDto futsalRequestDto, @RequestHeader("Authorization") String authorizationHeader) {
+    private void register(@RequestBody @Valid FutsalRequestDto futsalRequestDto,
+                          @RequestHeader("Authorization") String authorizationHeader) {
 
-        futsalService.addFutsal(futsalRequestDto,authorizationHeader);
+        futsalService.addFutsal(futsalRequestDto, authorizationHeader);
     }
+
     @GetMapping("/getAllRegisteredFutsal")
-    private ResponseEntity<List<FutsalResponseDto>> getAllFutsal(){
+    private ResponseEntity<List<FutsalResponseDto>> getAllFutsal() {
         return ResponseEntity.ok(futsalService.getAllFutsal());
     }
+
     @GetMapping("/getFutsal/{id}")
-    private ResponseEntity<FutsalResponseDto>getFutsal(@PathVariable("id") int id){
+    private ResponseEntity<FutsalResponseDto> getFutsal(@PathVariable("id") int id) {
         return ResponseEntity.ok(futsalService.getFutsal(id));
     }
+
     @PutMapping("/update")
-    private String updateFutsalContacts(@RequestBody ContactDto contactDto){
+    private String updateFutsalContacts(@RequestBody ContactDto contactDto) {
 
         futsalService.updateFutsal(contactDto);
         return "Updated";
     }
+
     @PostMapping("/updateStatus/{id}")
-    private String updateFutsal(@PathVariable("id") int id){
+    private String updateFutsal(@PathVariable("id") int id) {
         return futsalService.updateStatus(id);
     }
+
     @GetMapping("/specified")
     public List<Futsal> getSpecifiedFutsal(@RequestParam(required = false) String futsalName,
                                            @RequestParam(required = false) String contact,
                                            @RequestParam(required = false) String address,
-                                           Pageable pageable){
-        return futsalService.getSearchFutsal(futsalName,contact,address,pageable);
+                                           Pageable pageable) {
+        return futsalService.getSearchFutsal(futsalName, contact, address, pageable);
 //        Specification<Futsal> specification= new Specification<Futsal>() {
 //            @Override
 //            public Predicate toPredicate(Root<Futsal> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {

@@ -22,6 +22,6 @@ public class FutsalRequestDto {
     private FutsalEnum futsalEnum;
     private List<Contact> contact;
     private Address address;
-    private String image;
+
 
 }

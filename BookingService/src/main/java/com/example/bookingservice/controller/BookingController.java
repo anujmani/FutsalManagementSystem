@@ -17,8 +17,8 @@ public class BookingController {
 
 
     @PostMapping("/bookCourt")
-    private String bookId(@RequestBody BookingDto booking, @RequestHeader("Authorization")String authorizationHeader){
-       return bookingService.bookCourt(booking,authorizationHeader);
+    private String bookId(@RequestBody BookingDto booking, @RequestHeader("Authorization") String authorizationHeader) {
+        return bookingService.bookCourt(booking, authorizationHeader);
     }
 
 }

@@ -10,5 +10,10 @@
         <module name="EmailService.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="PaymentService" target="17" />
+      <module name="PaymentService.main" target="17" />
+      <module name="PaymentService.test" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
