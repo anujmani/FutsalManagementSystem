@@ -12,15 +12,6 @@ import java.util.Map;
 @RestControllerAdvice
 
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Map<String, Object>> notFoundHandler(ResourceNotFoundException ex) {
-        Map map = new HashMap();
-        map.put("message", ex.getMessage());
-        map.put("success", false);
-        map.put("status", HttpStatus.NOT_FOUND);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
-    }
-
     //Exception for the validation to be shown in the postman
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleInvalidArgument(MethodArgumentNotValidException ex) {
@@ -30,5 +21,15 @@ public class GlobalExceptionHandler {
         });
         return ResponseEntity.badRequest().body(errorMap);
     }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> notFoundHandler(ResourceNotFoundException ex) {
+        Map map = new HashMap();
+        map.put("message", ex.getMessage());
+        map.put("success", false);
+        map.put("status", HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(map);
+    }
+
+
 
 }

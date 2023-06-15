@@ -39,6 +39,8 @@ public class BookingServiceImpl implements BookingService {
         orginalBook.setBookingDate(booking.getBookingDate());
         orginalBook.setBookingTime(booking.getBookingTime());
         orginalBook.setFutsalid(booking.getFutsalId());
+        orginalBook.setTime(booking.getTime());
+        orginalBook.setEndtime(booking.getTime()+1);
 
         Futsal futsal = futsalClient.getFutsalById(booking.getFutsalId());
         String token = authhead.replace("Bearer ", "");
